@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>$safeprojectname$.Application</RootNamespace>
+    <IsPackable>true</IsPackable>
+    <Version>1.0.5</Version>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kandil.Domain\Kandil.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Interrfaces\" />
+    <Folder Include="Services\Implementation\" />
+  </ItemGroup>
+
+</Project>
