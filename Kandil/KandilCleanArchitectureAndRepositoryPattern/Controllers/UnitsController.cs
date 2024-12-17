@@ -103,6 +103,12 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
             return Ok(AllUnits);
         }
+        [HttpGet("GetAllPaidUnit")]
+        public async Task<IActionResult> GetAllPaidUnit()
+        {
+            var AllUnits = await unitOfWork.Units.FindAllAsync(e => e.status == "Sold");
+            return Ok(AllUnits);
+        }
         [HttpGet("{id:int}", Name =nameof(GetAllUnitsByProject))]
         public async Task<IActionResult> GetAllUnitsByProject(int id)
         {

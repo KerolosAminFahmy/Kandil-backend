@@ -22,7 +22,7 @@ namespace Kandil.Application.DTO
         public string NameLocation { get; set; }
         public string VideoUrl { get; set; }
         public int FinishCategoryId { get; set; }
-        public ICollection<IFormFile>? DetailImage { get; set; }
+        public IEnumerable<IFormFile>? DetailImage { get; set; }
 
         public List<int>? AllRemovedImages { get; set; }
 

@@ -139,8 +139,8 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             {
                 return NotFound();
             }
-            area.ElementAt(0).City = await unitOfWork.City.GetByIdAsync(id);
-            return Ok(area);
+            var city = await unitOfWork.City.GetByIdAsync(id);
+            return Ok(new { title= city.Name, data= area});
         }
         [HttpPut("{id:int}", Name = "UpdateArea")]
         [ProducesResponseType(StatusCodes.Status200OK)]
