@@ -30,6 +30,8 @@
   <ItemGroup>
     <Folder Include="Uploads\Media\" />
     <Folder Include="Uploads\Finish\" />
+    <Folder Include="Uploads\Cover\" />
+    <Folder Include="Uploads\PageSection\" />
     <Folder Include="Uploads\Slider\" />
     <Folder Include="Uploads\WhyUs\" />
     <Folder Include="Uploads\Projects\" />

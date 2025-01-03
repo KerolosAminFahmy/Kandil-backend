@@ -3,6 +3,7 @@ using Kandil.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace kandil.Web.Controllers
 {
@@ -16,6 +17,12 @@ namespace kandil.Web.Controllers
             var items = _context.WhyUs.ToList();
             return Ok(items);
         }
+        [HttpGet("{id:int}")]
+        public IActionResult Get(int id)
+        {
+            var item = _context.WhyUs.SingleOrDefault(e=>e.Id==id);
+            return Ok(item);
+        }
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [Authorize]
@@ -26,7 +33,16 @@ namespace kandil.Web.Controllers
 
             //existingItem.Title = item.Title;
             existingItem.Description = item.Description;
-
+            existingItem.FullDescription = item.FullDescription;
+            existingItem.Quote = item.Quote;
+            if (item.ImageFile != null) { 
+                bool isok = true; 
+                if (existingItem.ImageUrl != null && !existingItem.ImageUrl.IsNullOrEmpty())
+                {
+                   isok = await RemoveImage(existingItem.ImageUrl);
+                }
+               existingItem.ImageUrl =  await SaveImage(item.ImageFile);
+            }
             await _context.SaveChangesAsync();
             return NoContent();
         }

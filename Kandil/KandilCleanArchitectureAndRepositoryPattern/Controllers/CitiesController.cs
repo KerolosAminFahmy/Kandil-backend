@@ -1,4 +1,5 @@
-﻿using Kandil.Application.DTO;
+﻿using kandil.Application.DTO;
+using Kandil.Application.DTO;
 using Kandil.Application.RepositoryInterfaces;
 using Kandil.Domain.Entities;
 using Kandil.Infrastructure.Data;
@@ -118,6 +119,23 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 return NotFound(city);
             }
             return Ok(city);
+        }
+        [HttpGet("GetCityWithArea")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllCitiesWithArea()
+        {
+            var Cities = await work.City.GetAllAsync();
+            List<CityWithAreaDTO>result = new List<CityWithAreaDTO>();
+
+            foreach (var City in Cities) {
+                CityWithAreaDTO re = new CityWithAreaDTO();
+                re.city = City;
+                var AllArea = await work.area.FindAllAsync(e=>e.CityId==City.Id);
+                re.areas = AllArea;
+                result.Add(re);
+            }
+
+            return Ok(result);
         }
         /// <summary>
         /// Updates a city's details.

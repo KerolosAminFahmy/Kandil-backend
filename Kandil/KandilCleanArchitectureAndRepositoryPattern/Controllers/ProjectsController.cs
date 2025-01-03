@@ -192,25 +192,65 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
         [HttpGet("GetAllProjectByArea/{id:int}", Name = "GetAllProjectByArea")]
         public async Task<IActionResult> GetAllProjectByArea(int id)
         {
-            //var DetailImage = await unitOfWork.ProjectImages.FindAllAsync(x => x.ProjectId == id);
-            //var Advantage   = await unitOfWork.AdvantageProjects.FindAllAsync(x=>x.ProjectId == id);
-            //var Location    = await unitOfWork.LocationProjects.FindAllAsync(x=>x.ProjectId==id);
+          var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id, ["Area"]);
+
+            List<Project> result = new List<Project>();
+            foreach (var item in project)
+            {
+                var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
+                if (units == null || units.Count() == 0)
+                {
+                    result.Add(item);
+                    continue;
+                }
+                bool isPaid = false;
+                foreach (var unit in units)
+                {
+                    if (unit.status.Equals("Available"))
+                    {
+                        isPaid = true;
+                        break;
+                    }
+
+                }
+                if (isPaid)
+                {
+                    result.Add(item);
+
+
+                }
+            }
+            return Ok(result);
+        }
+        [HttpGet("GetAllPaidProjectByArea/{id:int}", Name = "GetAllPaidProjectByArea")]
+        public async Task<IActionResult> GetAllPaidProjectByArea(int id)
+        {
             var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id, ["Area"]);
-            //var detailProject = new DetailProjectDTO
-            //{
-            //    AboutProject = project.AboutProject,
-            //    AdvantageProjects = Advantage,
-            //    LocationImage = project.ImageNameLocation,
-            //    MainImage = project.ImageName,
-            //    ProjectImages = DetailImage,
-            //    Title = project.Title,
-            //    VideoUrl = project.VideoUrl,
-            //    LocationProjects = Location,
+            List<Project> result = new List<Project>();
+            foreach (var item in project)
+            {
+                var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
+                if (units == null || units.Count() == 0)
+                {
+                    continue;
+                }
+                bool isPaid = true;
+                foreach (var unit in units)
+                {
+                    if (unit.status.Equals("Available"))
+                    {
+                        isPaid = false;
+                        break;
+                    }
+
+                }
+                if (isPaid) {
+                    result.Add(item);
 
 
-            //};
-
-            return Ok(project);
+                }
+            }
+            return Ok(result);
         }
         [HttpGet("GetCityName/{id:int}")]
         public async Task<IActionResult> GetCityName(int id)

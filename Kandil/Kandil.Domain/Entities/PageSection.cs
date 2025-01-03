@@ -6,15 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Kandil.Domain.Entities
+namespace kandil.Domain.Entities
 {
-    public class WhyUs
+    public class PageSection
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Quote { get; set; }
-        public string FullDescription { get; set; }
+        public string? Text { get; set; }
         public string? ImageUrl { get; set; }
         [NotMapped]
         public IFormFile? ImageFile { get; set; }

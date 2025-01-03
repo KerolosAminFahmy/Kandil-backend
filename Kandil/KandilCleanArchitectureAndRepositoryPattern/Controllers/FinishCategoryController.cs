@@ -103,7 +103,7 @@ namespace kandil.Web.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[Authorize]
+        [Authorize]
 
         public async Task<IActionResult> UpdateFinishCategory(int id, [FromForm] FinishCategoryDTO finishCategoryDTO)
         {
@@ -151,7 +151,7 @@ namespace kandil.Web.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[Authorize]
+        [Authorize]
 
         public async Task<IActionResult> DeleteFinishCategory(int id)
         {

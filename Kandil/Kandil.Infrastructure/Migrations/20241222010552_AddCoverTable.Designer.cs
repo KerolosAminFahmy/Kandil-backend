@@ -4,6 +4,7 @@ using Kandil.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kandil.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222010552_AddCoverTable")]
+    partial class AddCoverTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,15 +468,7 @@ namespace Kandil.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FullDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
@@ -489,45 +484,35 @@ namespace Kandil.Infrastructure.Migrations
                         {
                             Id = 1,
                             Description = "\r\nالإنشاءات والعقارات والنمو الاقتصادي**: سأشرح كيف تسهم صناعة\r\nالإنشاءات والعقارات في زيادة الناتج المحلي الإجمالي للدولة",
-                            FullDescription = "",
                             ImageUrl = "",
-                            Quote = "",
                             Title = "لماذا قنديل"
                         },
                         new
                         {
                             Id = 2,
                             Description = "\r\nالإنشاءات والعقارات والنمو الاقتصادي**: سأشرح كيف تسهم صناعة\r\nالإنشاءات والعقارات في زيادة الناتج المحلي الإجمالي للدولة",
-                            FullDescription = "<div>\r\n<div>تُدرك شركة قنديل أهمية بناء علاقات قوية وناجحة مع عملائها...</div>\r\n</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>\r\n<div style=\"position: absolute; left: -65535px;\">&nbsp;</div>",
-                            ImageUrl = "e8005130-7693-4faf-a4e1-68284c1f6c59.png",
-                            Quote = "في عالم يزداد فيه التنافس يومًا بعد يوم،",
+                            ImageUrl = "image2.jpg",
                             Title = "الثقة"
                         },
                         new
                         {
                             Id = 3,
                             Description = "\r\nالإنشاءات والعقارات والنمو الاقتصادي**: سأشرح كيف تسهم صناعة\r\nالإنشاءات والعقارات في زيادة الناتج المحلي الإجمالي للدولة",
-                            FullDescription = "<ul class=\"ng-star-inserted\">\r\n<li class=\"ng-star-inserted\" style=\"text-align: center;\"><strong>الوفاء بالوعود</strong>: تنفيذ جميع الوعود التي تم تقديمها للعميل دون أي تهاون.</li>\r\n<li class=\"ng-star-inserted\" style=\"text-align: center;\"><strong>الالتزام بالمواعيد</strong>: تسليم الوحدات العقارية في الوقت المحدد دون تأخير.</li>\r\n<li class=\"ng-star-inserted\" style=\"text-align: center;\"><strong>الالتزام بالجودة</strong>: تنفيذ جميع الأعمال وفقًا للمواصفات والمعايير المتفق عليها.</li>\r\n<li class=\"ng-star-inserted\" style=\"text-align: center;\"><strong>الالتزام بالشفافية</strong>: تقديم جميع المعلومات والبيانات المتعلقة بالعقارات للعميل بشكل واضح وصريح.</li>\r\n<li class=\"ng-star-inserted\" style=\"text-align: center;\"><strong>الالتزام بالدعم</strong>: تقديم خدمات ما بعد البيع للعملاء وتلبية احتياجاتهم.</li>\r\n</ul>",
-                            ImageUrl = "66d68132-52f9-42d6-a424-55e59ea7b1c3.png",
-                            Quote = "شركة “قنديل للإستثمار العقاري” تلتزم بـ:",
+                            ImageUrl = "image3.jpg",
                             Title = "الإلتزام"
                         },
                         new
                         {
                             Id = 4,
                             Description = "\r\nالإنشاءات والعقارات والنمو الاقتصادي**: سأشرح كيف تسهم صناعة\r\nالإنشاءات والعقارات في زيادة الناتج المحلي الإجمالي للدولة",
-                            FullDescription = "<div>\r\n<div>تحرص شركة قنديل على الاستماع إلى آراء وملاحظات العملاء بشكل دائم...</div>\r\n</div>",
-                            ImageUrl = "18f6a9bb-fd51-49b6-9e50-76362bca1d24.png",
-                            Quote = "تُؤكد شركة قنديل على التزامها باستمرار تطبيق فلسفة الجودة في جميع جوانب عملها...",
+                            ImageUrl = "image4.jpg",
                             Title = "الجودة"
                         },
                         new
                         {
                             Id = 5,
                             Description = "\r\nالإنشاءات والعقارات والنمو الاقتصادي**: سأشرح كيف تسهم صناعة\r\nالإنشاءات والعقارات في زيادة الناتج المحلي الإجمالي للدولة",
-                            FullDescription = "<section class=\"InfoContent\">\r\n<div class=\"container\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-12\">\r\n<div class=\"page-details-inner service-details-inner\">\r\n<p>ي شركة قنديل، نؤمن إيمانًا راسخًا بأهمية المصداقية في جميع تعاملاتنا مع عملائنا. فمنذ تأسيسنا، حرصنا على بناء علاقات قوية قائمة على الثقة والاحترام المتبادل. وإيمانًا منا بأهمية المصداقية، نودّ أن نُؤكد على التزامنا بالمبادئ التالية:</p>\r\n<ul class=\"ng-star-inserted\">\r\n<li class=\"ng-star-inserted\"><strong>الشفافية</strong>: نُؤمن بأنّ الشفافية هي أساس المصداقية.</li>\r\n<li class=\"ng-star-inserted\"><strong>الوفاء بالوعود</strong>: نُدرك أهمية الوفاء بالوعود التي نُقدمها لعملائنا.</li>\r\n<li class=\"ng-star-inserted\"><strong>الصدق والأمانة</strong>: نُؤمن بأنّ الصدق والأمانة هما أساس أيّ علاقة ناجحة.</li>\r\n<li class=\"ng-star-inserted\"><strong>احترام احتياجات العملاء</strong>: نُدرك أهمية احتياجات عملائنا ونُقدرها.</li>\r\n<li class=\"ng-star-inserted\"><strong>خدمة عملاء ممتازة</strong>: نُؤمن بأنّ خدمة العملاء هي العنصر الأساسي لضمان رضاهم.</li>\r\n</ul>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</section>\r\n<div id=\"widgetWrapper\" class=\"bottom-right\">\r\n<div id=\"contentWrapper\" class=\"hide\"></div>\r\n<div id=\"widgetBubbleRow\"></div>\r\n</div>\r\n<section class=\"DiscoverArea\">\r\n<div class=\"container\">\r\n<div class=\"row\">\r\n<div class=\"col-lg-12\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</section>\r\n<footer>\r\n<div class=\"footer-top-area section-bg-2 plr--5\">\r\n<div class=\"container\">\r\n<div class=\"row\">\r\n<div class=\"col-xl-3 col-md-6 col-sm-6 col-12\">\r\n<div class=\"footer-widget footer-about-widget\">&nbsp;</div>\r\n</div>\r\n</div>\r\n</div>\r\n</div>\r\n</footer>",
-                            ImageUrl = "1327ea48-089e-4a94-b705-5cfd43bc19ff.png",
-                            Quote = "نُؤكد على التزامنا بالمصداقية في جميع تعاملاتنا مع عملائنا، ونُؤمن بأنّها هي أساس بناء علاقات قوية ودائمة. فنحن نُقدّر ثقتكم بنا ونُحافظ عليها من خلال الالتزام بالمبادئ والقيم التي نؤمن بها.",
+                            ImageUrl = "image4.jpg",
                             Title = "المصداقية"
                         });
                 });
@@ -858,69 +843,6 @@ namespace Kandil.Infrastructure.Migrations
                     b.HasIndex("MediaId");
 
                     b.ToTable("MediaImages");
-                });
-
-            modelBuilder.Entity("kandil.Domain.Entities.PageSection", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("pageSections");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ImageUrl = "KAndil-lemaza-2.jpg",
-                            Text = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ImageUrl = "3-copy.png",
-                            Text = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ImageUrl = "",
-                            Text = ""
-                        },
-                        new
-                        {
-                            Id = 4,
-                            ImageUrl = "",
-                            Text = ""
-                        },
-                        new
-                        {
-                            Id = 5,
-                            ImageUrl = "فلسفتنا.png",
-                            Text = "<p style=\"margin-bottom: 7rem;\">نحن نهتم بجودة مشاريعنا بتقديم أفضل بناء باستخدام أفضل خامات البناء بأعلى مستوى من التشطيب للواجهات الخارجة المصممة بإحترافية عالية على الإسلوبين الكلاسيك والمودرن .. بالاضافة الى خبراتنا التسويقية المتميزة التي تضمن لك أفضل استثمار بأعلى ربحية من خلال أفضل الطرق الاستثمارية الشاملة التي نقدمها لك. .</p>"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            ImageUrl = "خدماتنا.png",
-                            Text = "<p>نقدم شقق سكنية بالتجمع الخامس بأعلى مواصفات البناء والأكثر راحة للعملاء:</p><p style=\"margin-bottom: 7rem;\">(واجهات ألترا مودرن– بوابات الكترونية – كاميرات مراقبة – مداخل راقية جداً –&nbsp; أسانسير كامل – نافورة – مساحات خضراء – شلالات مياه – أمن وحراسة – جراج خاص لكل وحدة – تجهيز للدش المركزي والانتركم)</p>"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ImageUrl = "رؤيتنا.png",
-                            Text = "<p>تهدف الشركة الى تحقيق أعلى درجات النجاح في السوق العقاري في مصر معتمدة في ذلك على الالتزام والتنفيذ والحصول على ثقة العملاء الذين لم نصل الى هذا القدر من النجاح الا بثقتهم الغالية في شركتنا وفي أعمالنا .. ونحن نعتز بذلك …وأيضاً طموحاتنا في التوسع والانتشار على أكبر رقعة أرضية في مصر وخاصة في المدن الجديدة … ساعيين في خدمة المجتمع للصالح العام .</p>"
-                        });
                 });
 
             modelBuilder.Entity("kandil.Domain.Entities.SliderItem", b =>

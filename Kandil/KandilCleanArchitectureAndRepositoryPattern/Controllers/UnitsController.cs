@@ -103,6 +103,21 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
             return Ok(AllUnits);
         }
+        [HttpGet("search/{id:int}")]
+        public async Task<IActionResult> SreachUnit(int id)
+        {
+            var projects = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id);
+            List<Units> result = new List<Units>();
+            foreach (var project in projects)
+            {
+                var AllUnits = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == project.Id);
+                foreach(var unit in AllUnits)
+                {
+                    result.Add(unit);
+                }
+            }
+            return Ok(result);
+        }
         [HttpGet("GetAllPaidUnit")]
         public async Task<IActionResult> GetAllPaidUnit()
         {
