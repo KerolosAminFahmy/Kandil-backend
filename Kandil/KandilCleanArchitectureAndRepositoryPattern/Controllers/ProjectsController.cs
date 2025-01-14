@@ -30,8 +30,17 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
 
             var NameMainImage = await SaveImage(projectDTO.MainImage);
-            var NameLocationImage = await SaveImage(projectDTO.LocationImage);
-            var PdfName = await SaveImage(projectDTO.pdfFile);
+            string NameLocationImage = null;
+            if(projectDTO.LocationImage != null)
+            {
+                NameLocationImage = await SaveImage(projectDTO.LocationImage);
+            }
+            string PdfName = null;
+            if (projectDTO.pdfFile != null)
+            {
+                PdfName = await SaveImage(projectDTO.pdfFile);
+            } 
+            
             var project = new Project
             {
                 AboutProject = projectDTO.AboutProject,
@@ -44,38 +53,47 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             };
 
             project=await unitOfWork.Project.AddAsync(project);
-            unitOfWork.Complete();
-            foreach (var detailImage in projectDTO.Images)
+            //unitOfWork.Complete();
+            if(projectDTO.Images != null && projectDTO.Images.Count() != 0)
             {
-                var imageName = await SaveImage(detailImage.Image);
-                var projectImage = new ProjectImage
+                foreach (var detailImage in projectDTO.Images)
                 {
-                    ImageName = imageName,
-                    ProjectId = project.Id
-                };
-                await unitOfWork.ProjectImages.AddAsync(projectImage);
+                    var imageName = await SaveImage(detailImage.Image);
+                    var projectImage = new ProjectImage
+                    {
+                        ImageName = imageName,
+                        ProjectId = project.Id
+                    };
+                    await unitOfWork.ProjectImages.AddAsync(projectImage);
+                }
             }
-            foreach (var advantage in projectDTO.advantageProjects)
+            if(projectDTO.advantageProjects != null && projectDTO.advantageProjects.Count() != 0)
             {
-                var imageName = await SaveImage(advantage.Image);
-                var advantageProject = new AdvantageProject
+                foreach (var advantage in projectDTO.advantageProjects)
                 {
-                    Text = advantage.Text,
-                    ImageUrl = imageName,
-                    ProjectId = project.Id
-                };
-                await unitOfWork.AdvantageProjects.AddAsync(advantageProject);
+                    var imageName = await SaveImage(advantage.Image);
+                    var advantageProject = new AdvantageProject
+                    {
+                        Text = advantage.Text,
+                        ImageUrl = imageName,
+                        ProjectId = project.Id
+                    };
+                    await unitOfWork.AdvantageProjects.AddAsync(advantageProject);
+                }
             }
-            foreach (var location in projectDTO.locationProjects)
+            if (projectDTO.locationProjects != null && projectDTO.locationProjects.Count() != 0)
             {
-                var locationProject = new LocationProject
+                foreach (var location in projectDTO.locationProjects)
                 {
-                    Time = location.Time.ToString(),
-                    NameOfStreet = location.Street,
-                    ProjectId = project.Id
-                };
-                await unitOfWork.LocationProjects.AddAsync(locationProject);
-            }
+                    var locationProject = new LocationProject
+                    {
+                        Time = location.Time.ToString(),
+                        NameOfStreet = location.Street,
+                        ProjectId = project.Id
+                    };
+                    await unitOfWork.LocationProjects.AddAsync(locationProject);
+                }
+            } 
             unitOfWork.Complete();
 
             

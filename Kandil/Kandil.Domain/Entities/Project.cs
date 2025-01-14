@@ -12,11 +12,11 @@ namespace Kandil.Domain.Entities
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string AboutProject { get; set; }
-        public string VideoUrl { get; set; }
+        public string? AboutProject { get; set; }
+        public string? VideoUrl { get; set; }
         public string ImageName { get; set; }
-        public string PdfName { get; set; }
-        public string ImageNameLocation { get; set; }
+        public string? PdfName { get; set; }
+        public string? ImageNameLocation { get; set; }
         [ForeignKey("Area")]
         public int AreaId { get; set; }
         [JsonIgnore]
