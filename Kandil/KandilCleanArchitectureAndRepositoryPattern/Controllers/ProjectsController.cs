@@ -342,11 +342,19 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 return NotFound(); 
             }
             if (projectUpdate.pdfFile != null) {
-                var isOk = await RemoveImage(existProject.PdfName);
-                if (isOk)
+                if(existProject.PdfName != null)
+                {
+                    var isOk = await RemoveImage(existProject.PdfName);
+                    if (isOk)
+                    {
+                        existProject.PdfName = await SaveImage(projectUpdate.pdfFile);
+                    }
+                }
+                else
                 {
                     existProject.PdfName = await SaveImage(projectUpdate.pdfFile);
                 }
+               
 
             }
             if (projectUpdate.MainImage != null) {
@@ -356,11 +364,21 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 }
             }
             if (projectUpdate.LocationImage != null) {
-                var isOk = await RemoveImage(existProject.ImageNameLocation);
-                if (isOk)
+                if(existProject.ImageNameLocation != null)
                 {
-                    existProject.ImageNameLocation = await SaveImage(projectUpdate.LocationImage);
+                    var isOk = await RemoveImage(existProject.ImageNameLocation);
+                    if (isOk)
+                    {
+                        existProject.ImageNameLocation = await SaveImage(projectUpdate.LocationImage);
+                    }
                 }
+                else
+                {
+                    
+                  existProject.ImageNameLocation = await SaveImage(projectUpdate.LocationImage);
+                   
+                }
+               
             }
             existProject.Title = projectUpdate.Title;
             existProject.VideoUrl=projectUpdate.VideoURL;
