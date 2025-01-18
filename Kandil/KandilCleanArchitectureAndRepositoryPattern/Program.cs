@@ -18,7 +18,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -32,8 +31,28 @@ builder.Services.Configure<FormOptions>(options =>
 {
     options.MultipartBodyLengthLimit = 300 * 1024 * 1024;
 });
+var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(x => {
+        x.RequireHttpsMetadata = false;
+        x.SaveToken = true;
+        x.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+            ValidateIssuer = true,
+            ValidIssuer = "https://Kandil-api.com",
+            ValidAudience = "Kandil.com",
+            ValidateAudience = true,
+            ClockSkew = TimeSpan.Zero,
+        };
+    });
 builder.Services.AddAuthorization();
 
 builder.Services.AddSwaggerGen((options) =>
@@ -86,7 +105,6 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowAll");
 
-//app.UseStaticFiles();
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(

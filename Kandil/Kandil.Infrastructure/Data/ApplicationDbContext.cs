@@ -37,6 +37,8 @@ namespace Kandil.Infrastructure.Data
 
         public DbSet<CoverImage> coverImages { get; set; }
         public DbSet<PageSection> pageSections { get; set; }
+
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
