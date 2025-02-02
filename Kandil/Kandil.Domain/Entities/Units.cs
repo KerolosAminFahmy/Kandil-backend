@@ -14,7 +14,7 @@ namespace Kandil.Domain.Entities
         public string Description { get; set; }
         public string ImageName { get; set; }
         public string status { get; set; }
-
+        public bool IsShown { get; set; }
         public string CodeUnit { get; set; }
         public long Area { get; set; }
         public int NumberBathroom {  get; set; }

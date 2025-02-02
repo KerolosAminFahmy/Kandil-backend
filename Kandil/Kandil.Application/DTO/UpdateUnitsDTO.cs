@@ -26,7 +26,7 @@ namespace kandil.Application.DTO
         public double Longitude { get; set; }
         public string NameLocation { get; set; }
         public string TypePrice { get; set; }
-
+        public bool IsShown { get; set; }   
         public int ProjectId { get; set; }
         public List<AdvantageUnitUpdateDTO> AdvantageUnits { get; set; }
         public List<AdvantageUnitUpdateDTO> ServiceUnits { get; set; }

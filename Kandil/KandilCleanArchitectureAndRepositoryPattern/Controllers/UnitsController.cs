@@ -2,6 +2,7 @@
 using Kandil.Application.RepositoryInterfaces;
 using Kandil.Domain.Entities;
 using Kandil.Infrastructure.Data;
+using Kandil.Infrastructure.Migrations;
 using Kandil.Infrastructure.RepositoryImplementation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -48,6 +49,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                     NumberRoom = unitDto.NumberRoom,
                     YearOfBuild = unitDto.YearOfBuild,
                     Price = unitDto.Price,
+                    IsShown = unitDto.IsShown,
                     VideoUrl = unitDto.VideoUrl,
                     NameLocation = unitDto.NameLocation,
                     Longitude = unitDto.Longitude,
@@ -88,6 +90,12 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             var AllUnits = await unitOfWork.Units.GetAllAsync();
             return Ok(AllUnits);
         }
+        [HttpGet(nameof(GetUnits))]
+        public async Task<IActionResult> GetUnits()
+        {
+            var AllUnits = await unitOfWork.Units.FindAllAsync(e=>e.IsShown==true);
+            return Ok(AllUnits);
+        }
         [HttpGet("GetAllUnitHome")]
         public async Task<IActionResult> GetAllUnitHome()
         {
@@ -104,7 +112,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             return Ok(AllUnits);
         }
         [HttpGet("search/{id:int}")]
-        public async Task<IActionResult> SreachUnit(int id)
+        public async Task<IActionResult> SearchUnit(int id)
         {
             var projects = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id);
             List<Units> result = new List<Units>();
@@ -149,6 +157,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 Longitude   = Unit.Longitude,
                 Latitude = Unit.Latitude,
                 TypePrice = Unit.TypePrice,
+                IsShown = Unit.IsShown,
                 advantageUnits = AllAdvantage,
                 NumberBathroom = Unit.NumberBathroom,
                 NumberRoom = Unit.NumberRoom,
@@ -184,6 +193,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             ExistUnit.NumberRoom=updateUnits.NumberRoom;
             ExistUnit.Description=updateUnits.Description;
             ExistUnit.Area=updateUnits.Area;
+            ExistUnit.IsShown = updateUnits.IsShown;       
             ExistUnit.CodeUnit=updateUnits.CodeUnit;
             ExistUnit.NumberBathroom=updateUnits.NumberBathroom;
             ExistUnit.VideoUrl=updateUnits.VideoUrl;    
@@ -298,12 +308,9 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                     unitOfWork.UnitImage.Add(obj);  
                 }
                 unitOfWork.Complete();
-               
-            
-            
             }
             
-            return Ok();
+            return Ok(new { id = ExistUnit.ProjectId });
         }
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -317,6 +324,20 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
 
             return Ok();
+        }
+        [HttpPut("units/{id}/toggle-visibility")]
+        public async Task<IActionResult> ToggleVisibility(int id)
+        {
+            var unit = await _context.Units.FindAsync(id);
+            if (unit == null)
+            {
+                return NotFound(new { Message = "Unit not found." });
+            }
+            unit.IsShown = !unit.IsShown;
+            _context.Units.Update(unit);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { IsShown = unit.IsShown });
         }
 
         [HttpGet("{imageName}")]

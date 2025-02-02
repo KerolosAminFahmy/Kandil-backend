@@ -58,7 +58,7 @@ namespace kandil.Application.DTO
         public double Longitude { get; set; }
         public string NameLocation { get; set; }
         public string TypePrice { get; set; }
-
+        public bool IsShown { get; set; }
         public ICollection<IFormFile> DetailImage { get; set; }
         public IEnumerable<string> Advantage { get; set; }
         public IEnumerable<string> Services { get; set; }

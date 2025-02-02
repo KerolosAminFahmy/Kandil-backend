@@ -17,6 +17,7 @@ namespace kandil.Application.DTO
         public string status { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
+        public bool IsShown { get; set; }
         public string NameLocation { get; set; }
         public string TypePrice { get; set; }
         public string CodeUnit { get; set; }
