@@ -50,6 +50,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 ImageNameLocation = NameLocationImage,
                 Title = projectDTO.Title,
                 PdfName = PdfName,
+                IsFinish = projectDTO.IsFinish
             };
 
             project=await unitOfWork.Project.AddAsync(project);
@@ -174,6 +175,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 Title = result1.Title,
                 PdfFile=result1.PdfName,
                 VideoURL = result1.VideoUrl,
+                IsFinish = result1.IsFinish,
                 advantageProjects = _context.AdvantageProjects.Where(e => e.ProjectId == id).ToList(),
                 LocationProjects = _context.LocationProjects.Where(e => e.ProjectId == id).ToList(),
                 Images = _context.projectImages.Where(e => e.ProjectId == id).Select(e => e.ImageName).ToList(),
@@ -210,64 +212,74 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
         [HttpGet("GetAllProjectByArea/{id:int}", Name = "GetAllProjectByArea")]
         public async Task<IActionResult> GetAllProjectByArea(int id)
         {
-          var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id, ["Area"]);
+          var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id && e.IsFinish==false, ["Area"]);
 
             List<Project> result = new List<Project>();
-            foreach (var item in project)
-            {
-                var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
-                if (units == null || units.Count() == 0)
-                {
-                    result.Add(item);
-                    continue;
-                }
-                bool isPaid = false;
-                foreach (var unit in units)
-                {
-                    if (unit.status.Equals("Available"))
-                    {
-                        isPaid = true;
-                        break;
-                    }
+            result = project.ToList();
+            //foreach (var item in project)
+            //{
+            //    if(item.IsFinish == false)
+            //    {
+            //        result.Add(item);
+            //    }
+            //    //var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
+            //    //if (units == null || units.Count() == 0)
+            //    //{
+            //    //    result.Add(item);
+            //    //    continue;
+            //    //}
+            //    //bool isPaid = false;
+            //    //foreach (var unit in units)
+            //    //{
+            //    //    if (unit.status.Equals("Available"))
+            //    //    {
+            //    //        isPaid = true;
+            //    //        break;
+            //    //    }
 
-                }
-                if (isPaid)
-                {
-                    result.Add(item);
+            //    //}
+            //    //if (isPaid)
+            //    //{
+            //    //    result.Add(item);
 
 
-                }
-            }
+            //    //}
+            //}
             return Ok(result);
         }
         [HttpGet("GetAllPaidProjectByArea/{id:int}", Name = "GetAllPaidProjectByArea")]
         public async Task<IActionResult> GetAllPaidProjectByArea(int id)
         {
-            var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id, ["Area"]);
+            var project = await unitOfWork.Project.FindAllAsync(e => e.AreaId == id && e.IsFinish==true, ["Area"]);
             List<Project> result = new List<Project>();
-            foreach (var item in project)
-            {
-                var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
-                if (units == null || units.Count() == 0)
-                {
-                    continue;
-                }
-                bool isPaid = true;
-                foreach (var unit in units)
-                {
-                    if (unit.status.Equals("Available"))
-                    {
-                        isPaid = false;
-                        break;
-                    }
+            result = project.ToList();  
+            //foreach (var item in project)
+            //{
+            //    if(item.IsFinish == true)
+            //    {
+            //        result.Add(item);
+            //    }
+            //    //var units = await unitOfWork.Units.FindAllAsync(e => e.ProjectId == item.Id);
+            //    //if (units == null || units.Count() == 0)
+            //    //{
+            //    //    continue;
+            //    //}
+            //    //bool isPaid = true;
+            //    //foreach (var unit in units)
+            //    //{
+            //    //    if (unit.status.Equals("Available"))
+            //    //    {
+            //    //        isPaid = false;
+            //    //        break;
+            //    //    }
 
-                }
-                if (isPaid) {
-                    result.Add(item);
+            //    //}
+            //    //if (isPaid) {
+            //    //    result.Add(item);
 
 
-                }
-            }
+            //    //}
+            //}
             return Ok(result);
         }
         [HttpGet("GetCityName/{id:int}")]
@@ -383,6 +395,7 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             existProject.Title = projectUpdate.Title;
             existProject.VideoUrl=projectUpdate.VideoURL;
             existProject.AboutProject=projectUpdate.AboutProject;
+            existProject.IsFinish = projectUpdate.IsFinish;
             unitOfWork.Project.Update(existProject);
             unitOfWork.Complete();
             if (projectUpdate.ImageRemoved!=null && projectUpdate.ImageRemoved.Count() != 0) {

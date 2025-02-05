@@ -15,6 +15,7 @@ namespace Kandil.Application.DTO
         public string Title { get; set; }
         public string AboutProject { get; set; }
         public string VideoURL { get; set; }
+        public bool IsFinish { get; set; }  
         public IFormFile? MainImage { get; set; }
         public IFormFile? LocationImage { get; set; }
         public IFormFile? pdfFile { get; set; }

@@ -15,6 +15,9 @@ namespace Kandil.Domain.Entities
         public string? AboutProject { get; set; }
         public string? VideoUrl { get; set; }
         public string ImageName { get; set; }
+
+        public bool IsFinish { get; set; }
+
         public string? PdfName { get; set; }
         public string? ImageNameLocation { get; set; }
         [ForeignKey("Area")]

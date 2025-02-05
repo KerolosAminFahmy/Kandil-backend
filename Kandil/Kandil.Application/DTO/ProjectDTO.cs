@@ -20,6 +20,7 @@ namespace Kandil.Application.DTO
         //[Required(ErrorMessage = "يرجي اداخال لينك فيديو من يوتيوب")]
         public string? VideoUrl { get; set; }
 
+        public bool IsFinish { get; set; }
         public ICollection<imageDTO>? Images { get; set; }
 
         public ICollection<AdvantageProjectDTO>? advantageProjects { get; set; }

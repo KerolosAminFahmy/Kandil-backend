@@ -20,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
     option.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"))
+        builder.Configuration.GetConnectionString("Connection"))
 );
 
 

@@ -21,10 +21,10 @@ namespace kandil.Application.DTO
         public string NameLocation { get; set; }
         public string TypePrice { get; set; }
         public string CodeUnit { get; set; }
-        public long Area { get; set; }
+        public long? Area { get; set; }
         public int NumberBathroom { get; set; }
         public int NumberRoom { get; set; }
-        public int YearOfBuild { get; set; }
+        public int? YearOfBuild { get; set; }
         public double Price { get; set; }
         public string VideoUrl { get; set; }
         public int ProjectId { get; set; }

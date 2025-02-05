@@ -11,17 +11,17 @@ namespace Kandil.Domain.Entities
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string ImageName { get; set; }
-        public string status { get; set; }
+        public string? status { get; set; }
         public bool IsShown { get; set; }
-        public string CodeUnit { get; set; }
-        public long Area { get; set; }
+        public string? CodeUnit { get; set; }
+        public long? Area { get; set; }
         public int NumberBathroom {  get; set; }
         public int NumberRoom {  get; set; }
-        public int YearOfBuild { get; set; }
+        public int? YearOfBuild { get; set; }
         public double Price { get; set; }
-        public string VideoUrl { get; set; }
+        public string? VideoUrl { get; set; }
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string NameLocation { get; set; }

@@ -66,14 +66,18 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                         string imageName = await SaveImage(image);
                         detailImages.Add(new UnitImage { ImageName = imageName,UnitId=unit.Id });
                     }
+                     await unitOfWork.UnitImage.AddRangeAsync(detailImages);
                 }
-                await unitOfWork.UnitImage.AddRangeAsync(detailImages);
+                if (unitDto.Advantage != null) { 
+                    var advantages = unitDto.Advantage.Select(a => new AdvantageUnit { Text = a,UnitId = unit.Id }).ToList();
+                    await unitOfWork.AdvantageUnit.AddRangeAsync(advantages);
+                }
+                if(unitDto.Services != null)
+                {
+                    var services = unitDto.Services.Select(s => new ServiceUnit { Text = s, UnitId = unit.Id }).ToList();
+                    await unitOfWork.ServiceUnit.AddRangeAsync(services);
 
-                var advantages = unitDto.Advantage.Select(a => new AdvantageUnit { Text = a,UnitId = unit.Id }).ToList();
-                await unitOfWork.AdvantageUnit.AddRangeAsync(advantages);
-
-                var services = unitDto.Services.Select(s => new ServiceUnit { Text = s, UnitId = unit.Id }).ToList();
-                await unitOfWork.ServiceUnit.AddRangeAsync(services);
+                }
                 unitOfWork.Complete();
 
                 return Ok(unit);
@@ -205,11 +209,10 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             if (updateUnits.Image != null)
             {
                 var isOK =await RemoveImage(ExistUnit.ImageName);
-                if (isOK)
-                {
+                
                     var nameOfImage = await SaveImage(updateUnits.Image);
                     ExistUnit.ImageName = nameOfImage;  
-                }
+               
                
 
             }
