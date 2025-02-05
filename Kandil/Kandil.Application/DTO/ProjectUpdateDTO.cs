@@ -20,8 +20,8 @@ namespace Kandil.Application.DTO
         public IFormFile? pdfFile { get; set; }
         public ICollection<int>? LocationRemovedList { get; set; }
         public ICollection<int>? AdvantageRemovedList { get; set; }
-        public ICollection<LocationProjectUpdateDTO> LocationProjects { get; set; }
-        public ICollection<AdvantageUpdateProjectDTO> advantageUpdates { get; set; }
+        public ICollection<LocationProjectUpdateDTO>? LocationProjects { get; set; }
+        public ICollection<AdvantageUpdateProjectDTO>? advantageUpdates { get; set; }
 
         public ICollection<string>? ImageRemoved { get; set; }
         public ICollection<imageDTO>? images { get; set; }
