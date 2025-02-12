@@ -357,10 +357,9 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
                 if(existProject.PdfName != null)
                 {
                     var isOk = await RemoveImage(existProject.PdfName);
-                    if (isOk)
-                    {
-                        existProject.PdfName = await SaveImage(projectUpdate.pdfFile);
-                    }
+                    
+                    existProject.PdfName = await SaveImage(projectUpdate.pdfFile);
+                   
                 }
                 else
                 {
@@ -371,18 +370,17 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
             if (projectUpdate.MainImage != null) {
                var isOk =  await RemoveImage(existProject.ImageName);
-                if (isOk) {
-                 existProject.ImageName = await SaveImage(projectUpdate.MainImage);
-                }
+                
+               existProject.ImageName = await SaveImage(projectUpdate.MainImage);
+               
             }
             if (projectUpdate.LocationImage != null) {
                 if(existProject.ImageNameLocation != null)
                 {
                     var isOk = await RemoveImage(existProject.ImageNameLocation);
-                    if (isOk)
-                    {
-                        existProject.ImageNameLocation = await SaveImage(projectUpdate.LocationImage);
-                    }
+                   
+                    existProject.ImageNameLocation = await SaveImage(projectUpdate.LocationImage);
+                    
                 }
                 else
                 {

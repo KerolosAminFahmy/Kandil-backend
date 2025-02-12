@@ -210,8 +210,8 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             {
                 var isOK =await RemoveImage(ExistUnit.ImageName);
                 
-                    var nameOfImage = await SaveImage(updateUnits.Image);
-                    ExistUnit.ImageName = nameOfImage;  
+                var nameOfImage = await SaveImage(updateUnits.Image);
+                ExistUnit.ImageName = nameOfImage;  
                
                
 

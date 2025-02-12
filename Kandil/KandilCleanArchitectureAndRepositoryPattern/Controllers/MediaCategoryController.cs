@@ -102,12 +102,10 @@ namespace kadnil.Web.Controllers
                     if (dto.Image != null)
                     {
                         var isOk = await RemoveImage(ExistMediaCategory.ImageName);
-                        if (isOk)
-                        {
-
-                            var nameOfImage = await SaveImage(dto.Image);
-                            ExistMediaCategory.ImageName = nameOfImage;
-                        }
+                     
+                        var nameOfImage = await SaveImage(dto.Image);
+                        ExistMediaCategory.ImageName = nameOfImage;
+                        
                     }
                 }
                 unitOfWork.MediaCategory.Update(ExistMediaCategory);

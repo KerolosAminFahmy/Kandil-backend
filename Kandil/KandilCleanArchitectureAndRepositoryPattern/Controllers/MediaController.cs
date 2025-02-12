@@ -139,12 +139,11 @@ namespace kandil.Web.Controllers
                     if(dto.Image != null)
                     {
                         var isOk = await RemoveImage(ExistMedia.ImageName);
-                        if (isOk)
-                        {
+                       
 
-                            var nameOfImage = await SaveImage(dto.Image);
-                            ExistMedia.ImageName = nameOfImage;
-                        }
+                        var nameOfImage = await SaveImage(dto.Image);
+                        ExistMedia.ImageName = nameOfImage;
+                        
                     }
                     if(dto.AllRemovedImages != null && dto.AllRemovedImages.Count() > 0)
                     {

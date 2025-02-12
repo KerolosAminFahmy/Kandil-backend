@@ -36,7 +36,7 @@ namespace kandil.Web.Controllers
             if (!existingItem.ImageName.IsNullOrEmpty()) {
 
                 bool isOk = await RemoveImage(existingItem.ImageName);
-                if (isOk && item.formFile != null) {
+                if (item.formFile != null) {
 
                     existingItem.ImageName = await SaveImage(item.formFile);
                 

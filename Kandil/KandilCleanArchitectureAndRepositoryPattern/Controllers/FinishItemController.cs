@@ -121,11 +121,10 @@ namespace Kandil.Web.Controllers
             if (updateFinishItem.Image != null)
             {
                 var isOK = await RemoveImage(ExistFinishItem.ImageName);
-                if (isOK)
-                {
-                    var nameOfImage = await SaveImage(updateFinishItem.Image);
-                    ExistFinishItem.ImageName = nameOfImage;
-                }
+                
+                var nameOfImage = await SaveImage(updateFinishItem.Image);
+                ExistFinishItem.ImageName = nameOfImage;
+                
 
 
             }

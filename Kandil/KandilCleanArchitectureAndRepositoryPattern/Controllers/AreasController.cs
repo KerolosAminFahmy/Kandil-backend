@@ -102,6 +102,31 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
 
             return Ok(result);
         }
+        [HttpGet("AllAvailableAreas")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> AllAvailableAreas()
+        {
+            var result = await _context.Cities.AsNoTracking()
+         .Select(city => new AllAreaDTO
+         {
+             Id = city.Id,
+             City = city.Name,
+             ViewAreas = city.Areas
+                 .Where(area => !area.projects.Any() || area.projects.Any(p => !p.IsFinish)) // Filter areas
+                 .Select(area => new ViewAreaDTO
+                 {
+                     id = area.Id,
+                     name = area.Name,
+                     ImageName = area.ImageName
+                 })
+                 .ToList()
+         })
+         .ToListAsync();
+
+
+            return Ok(result);
+        }
         [HttpGet("{id:int}", Name = "GetArea")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -120,6 +145,66 @@ namespace KandilCleanArchitectureAndRepositoryPattern.Web.Controllers
             }
 
             return Ok(area);
+        }
+        [HttpGet("FinishArea/{id:int}",Name = nameof(GetAllPaidArea))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllPaidArea(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var Areas = await unitOfWork.area.FindAllAsync(e => e.CityId == id, ["City"]);
+            
+            if (Areas == null)
+            {
+                return NotFound();
+            }
+            List<area> result=new List<area>();
+            foreach(var area in Areas)
+            {
+                var AllProjet = await unitOfWork.Project.CountAsync(e => e.AreaId == area.Id && e.IsFinish==true);
+                if(AllProjet>0)
+                {
+                    result.Add(area);
+                }   
+            }
+            var city = await unitOfWork.City.GetByIdAsync(id);
+            return Ok(new { title = city.Name, data = result });
+        }
+        [HttpGet("UnfinishArea/{id:int}", Name = nameof(GetAllFreeArea))]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllFreeArea(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var Areas = await unitOfWork.area.FindAllAsync(e => e.CityId == id, ["City"]);
+
+            if (Areas == null)
+            {
+                return NotFound();
+            }
+            List<area> result = new List<area>();
+            foreach (var area in Areas)
+            {
+                var AllProjet = await unitOfWork.Project.CountAsync(e => e.AreaId == area.Id);
+
+                var AllPaidProject = await unitOfWork.Project.CountAsync(e => e.AreaId == area.Id && e.IsFinish == true);
+                if (AllProjet == 0||AllProjet > AllPaidProject)
+                {
+                    result.Add(area);
+                }
+            }
+            var city = await unitOfWork.City.GetByIdAsync(id);
+            return Ok(new { title = city.Name, data = result });
         }
         [HttpGet("GetAreaByCity/{id:int}", Name = "GetAreaByCity")]
         [ProducesResponseType(StatusCodes.Status200OK)]
